@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean Sphere - Smart Homestead Waste Management</title>
+    <!-- Add Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Mobile Menu Styles */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .close-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem;
+        }
+
+        .close-menu-btn::after {
+            content: "×";
+            font-size: 2rem;
+        }
+
+        /* Navigation */
+        nav {
+            background: #1a4d2e;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 1001;
+        }
+
+        .logo::before {
+            content: "🌍";
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #9cc5a1;
+        }
+
+        /* Fixed Background Slider */
+        .slider {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+        }
+
+        /* Content */
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero Section */
+        #home {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 5px 2px rgb(0, 0, 0);
+        }
+
+        .hero-content p {
+            font-size: 1.6rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: blue;
+            color: white;
+            text-decoration: none;
+            font-weight: bolder;
+            border-radius: 30px;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .btn:hover {
+            background: #1b4332;
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .section-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        #about {
+            background: #f8f9fa;
+        }
+
+        /* Services Section */
+        #services {
+            background: white;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card h3 {
+            color: #1a4d2e;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: #f8f9fa;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2d6a4f;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a4d2e;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #1a4d2e;
+            font-size: 2.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .close-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                background: #1a4d2e;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: right 0.3s ease-in-out;
+                gap: 2rem;
+                padding-top: 4rem;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                margin: 0;
+                font-size: 1.2rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                margin: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+            }
+
+            section {
+                padding: 4rem 1rem;
+            }
+        }
+        .icon {
+            margin-right: 0.5rem;
+        }
+
+        .service-card h3 .icon {
+            font-size: 1.2em;
+            color: #2d6a4f;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <div class="logo">Clean Sphere<i class="fas fa-recycle icon"></i></div>
+            <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+            <div class="nav-links">
+                <button class="close-menu-btn"></button>
+                <a href="#home"><i class="fas fa-home icon"></i>Home</a>
+                <a href="#about"><i class="fas fa-info-circle icon"></i>About</a>
+                <a href="#services"><i class="fas fa-truck icon"></i>Services</a>
+                <a href="#contact"><i class="fas fa-envelope icon"></i>Contact</a>
+                <a href="#" class="btn" id="dashboardBtn"><i class="fas fa-user icon"></i>My Account</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Fixed Background Slider -->
+    <div class="slider">
+        <div class="slide active" style="background-image: url('pic1.png');"></div>
+        <div class="slide" style="background-image: url('pic2.png');"></div>
+        <div class="slide" style="background-image: url('pic3.png');"></div>
+    </div>
+
+
+    <!-- Content -->
+    <div class="content">
+        <!-- Hero Section -->
+        <section id="home">
+            <div class="hero-content">
+                <h1><i class="fas fa-leaf icon"></i>Smart Waste Management for Your Homestead</h1>
+                <p>Efficient, eco-friendly solutions to keep your property clean and sustainable</p>
+                <a href="#contact" class="btn"><i class="fas fa-rocket icon"></i>Get Started</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="section-content">
+                <h2 class="section-title"><i class="fas fa-info-circle icon"></i>About Clean Sphere</h2>
+                <p style="text-align: center; font-size: 1.1rem; line-height: 1.8; max-width: 800px; margin: 0 auto;">
+                    Clean Sphere is your trusted partner in homestead waste management. We understand the unique challenges of rural and semi-rural properties. Our mission is to help you maintain a clean, organized, and environmentally friendly homestead through smart waste solutions tailored to your needs.
+                </p>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services">
+            <div class="section-content">
+                <h2 class="section-title"><i class="fas fa-cogs icon"></i>Our Services</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <h3><i class="fas fa-trash-alt icon"></i>Regular Waste Collection</h3>
+                        <p>Scheduled pickup of household waste, tailored to your homestead's needs and location.</p>
+                    </div>
+                    <div class="service-card">
+                        <h3><i class="fas fa-recycle icon"></i>Recycling Programs</h3>
+                        <p>Comprehensive recycling solutions to minimize your environmental impact and promote sustainability.</p>
+                    </div>
+                    <div class="service-card">
+                        <h3><i class="fas fa-seedling icon"></i>Composting Solutions</h3>
+                        <p>Expert advice and services to turn your organic waste into valuable compost for your land.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="section-content">
+                <h2 class="section-title"><i class="fas fa-envelope icon"></i>Get in Touch</h2>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" placeholder="Phone Number" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Tell us about your homestead and waste management needs" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn"><i class="fas fa-paper-plane icon"></i>Request Service</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="section-content">
+                <p>&copy; 2024 Clean Sphere. All rights reserved.</p>
+                <p style="margin-top: 1rem; font-size: 0.9rem;">
+                    <i class="fas fa-leaf icon"></i>Empowering Sustainable Homesteads
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const closeMenuBtn = document.querySelector('.close-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.add('active');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Slider functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Initialize slider
+        setInterval(nextSlide, 6000);
+
+        // Dashboard button functionality
+        document.getElementById('dashboardBtn').addEventListener('click', function() {
+            window.location.href = '/client-portal';
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                if(this.getAttribute('href') === '#') return;
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your inquiry. Our team will contact you within 24 hours.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
