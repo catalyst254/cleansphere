@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clean Sphere - Smart Homestead Waste Management</title>
-    <!-- Add Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -270,6 +269,131 @@
             font-size: 2.5rem;
         }
 
+        /* Waste Report Form Styles */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .waste-report-form {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .waste-report-form h2 {
+            color: #cacdff;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-decoration: underline;
+        } 
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: blue;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #81c784;
+            border-radius: 8px;
+            background-color: #e8f5e9;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2d6a4f;
+            box-shadow: 0 0 5px rgba(45, 106, 79, 0.5);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .waste-report-form::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(35deg, #6abe6f, #06301d);
+            z-index: -1;
+            border-radius: 17px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:hover,
+        .form-group select:hover,
+        .form-group textarea:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #1c0df1, #06082b);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .icon {
+            margin-right: 0.5rem;
+        }
+
+        .service-card h3 .icon {
+            font-size: 1.2em;
+            color: #2d6a44;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .mobile-menu-btn {
@@ -338,14 +462,6 @@
                 padding: 4rem 1rem;
             }
         }
-        .icon {
-            margin-right: 0.5rem;
-        }
-
-        .service-card h3 .icon {
-            font-size: 1.2em;
-            color: #2d6a4f;
-        }
     </style>
 </head>
 <body>
@@ -364,13 +480,13 @@
             </div>
         </div>
     </nav>
+
     <!-- Fixed Background Slider -->
     <div class="slider">
         <div class="slide active" style="background-image: url('pic1.png');"></div>
         <div class="slide" style="background-image: url('pic2.png');"></div>
         <div class="slide" style="background-image: url('pic3.png');"></div>
     </div>
-
 
     <!-- Content -->
     <div class="content">
@@ -379,7 +495,7 @@
             <div class="hero-content">
                 <h1><i class="fas fa-leaf icon"></i>Smart Waste Management for Your Homestead</h1>
                 <p>Efficient, eco-friendly solutions to keep your property clean and sustainable</p>
-                <a href="#contact" class="btn"><i class="fas fa-rocket icon"></i>Get Started</a>
+                <a href="#" class="btn" id="getStartedBtn"><i class="fas fa-rocket icon"></i>Get Started</a>
             </div>
         </section>
 
@@ -393,124 +509,188 @@
             </div>
         </section>
 
-        <!-- Services Section -->
-        <section id="services">
-            <div class="section-content">
-                <h2 class="section-title"><i class="fas fa-cogs icon"></i>Our Services</h2>
-                <div class="services-grid">
-                    <div class="service-card">
-                        <h3><i class="fas fa-trash-alt icon"></i>Regular Waste Collection</h3>
-                        <p>Scheduled pickup of household waste, tailored to your homestead's needs and location.</p>
-                    </div>
-                    <div class="service-card">
-                        <h3><i class="fas fa-recycle icon"></i>Recycling Programs</h3>
-                        <p>Comprehensive recycling solutions to minimize your environmental impact and promote sustainability.</p>
-                    </div>
-                    <div class="service-card">
-                        <h3><i class="fas fa-seedling icon"></i>Composting Solutions</h3>
-                        <p>Expert advice and services to turn your organic waste into valuable compost for your land.</p>
-                    </div>
-                </div>
+<!-- Services Section -->
+<section id="services">
+    <div class="section-content">
+        <h2 class="section-title"><i class="fas fa-cogs icon"></i>Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3><i class="fas fa-trash-alt icon"></i>Regular Waste Collection</h3>
+                <p>Scheduled pickup of household waste, tailored to your homestead's needs and location.</p>
             </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact">
-            <div class="section-content">
-                <h2 class="section-title"><i class="fas fa-envelope icon"></i>Get in Touch</h2>
-                <form class="contact-form">
-                    <div class="form-group">
-                        <input type="text" placeholder="Your Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="Email Address" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" placeholder="Phone Number" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea placeholder="Tell us about your homestead and waste management needs" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn"><i class="fas fa-paper-plane icon"></i>Request Service</button>
-                </form>
+            <div class="service-card">
+                <h3><i class="fas fa-recycle icon"></i>Recycling Programs</h3>
+                <p>Comprehensive recycling solutions to minimize your environmental impact and promote sustainability.</p>
             </div>
-        </section>
-
-        <!-- Footer -->
-        <footer>
-            <div class="section-content">
-                <p>&copy; 2024 Clean Sphere. All rights reserved.</p>
-                <p style="margin-top: 1rem; font-size: 0.9rem;">
-                    <i class="fas fa-leaf icon"></i>Empowering Sustainable Homesteads
-                </p>
+            <div class="service-card">
+                <h3><i class="fas fa-seedling icon"></i>Composting Solutions</h3>
+                <p>Expert advice and services to turn your organic waste into valuable compost for your land.</p>
             </div>
-        </footer>
+        </div>
     </div>
+</section>
 
-    <script>
-        // Mobile menu functionality
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const closeMenuBtn = document.querySelector('.close-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
+<!-- Contact Section -->
+<section id="contact">
+    <div class="section-content">
+        <h2 class="section-title"><i class="fas fa-envelope icon"></i>Get in Touch</h2>
+        <form class="contact-form">
+            <div class="form-group">
+                <input type="text" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Email Address" required>
+            </div>
+            <div class="form-group">
+                <input type="tel" placeholder="Phone Number" required>
+            </div>
+            <div class="form-group">
+                <textarea placeholder="Tell us about your homestead and waste management needs" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn"><i class="fas fa-paper-plane icon"></i>Request Service</button>
+        </form>
+    </div>
+</section>
 
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.add('active');
-        });
+<!-- Footer -->
+<footer>
+    <div class="section-content">
+        <p>&copy; 2024 Clean Sphere. All rights reserved.</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">
+            <i class="fas fa-leaf icon"></i>Empowering Sustainable Homesteads
+        </p>
+    </div>
+</footer>
+</div>
 
-        closeMenuBtn.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-        });
+<!-- Waste Report Form Overlay -->
+<div class="overlay" id="wasteReportOverlay">
+<div class="waste-report-form">
+    <button class="close-btn" id="closeFormBtn"><i class="fas fa-times"></i></button>
+    <h2><i class="fas fa-recycle icon"></i>Report Waste</h2>
+    <form id="wasteReportForm">
+        <div class="form-group">
+            <label for="location"><i class="fas fa-map-marker-alt icon"></i>Location</label>
+            <input type="text" id="location" name="location" placeholder="Enter location" required>
+        </div>
 
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
+        <div class="form-group">
+            <label for="wasteType"><i class="fas fa-trash-alt icon"></i>Waste Type</label>
+            <select id="wasteType" name="wasteType" required>
+                <option value="" disabled selected>Select waste type</option>
+                <option value="Plastic">Plastic</option>
+                <option value="Organic">Organic</option>
+                <option value="Hazardous">Hazardous</option>
+                <option value="E-waste">E-waste</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="quantity"><i class="fas fa-weight icon"></i>Estimated Quantity (kg)</label>
+            <input type="number" id="quantity" name="quantity" min="0" step="0.1" placeholder="Enter estimated quantity" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description"><i class="fas fa-comment-alt icon"></i>Description</label>
+            <textarea id="description" name="description" rows="4" placeholder="Describe the waste issue" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="urgency"><i class="fas fa-exclamation-circle icon"></i>Urgency Level</label>
+            <select id="urgency" name="urgency" required>
+                <option value="" disabled selected>Select urgency level</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="image"><i class="fas fa-camera icon"></i>Upload Image (Optional)</label>
+            <input type="file" id="image" name="image" accept="image/*">
+        </div>
+
+        <button type="submit" class="submit-btn"><i class="fas fa-paper-plane icon"></i>Submit Report</button>
+    </form>
+</div>
+</div>
+
+<script>
+// Mobile menu functionality
+const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+const closeMenuBtn = document.querySelector('.close-menu-btn');
+const navLinks = document.querySelector('.nav-links');
+
+mobileMenuBtn.addEventListener('click', () => {
+    navLinks.classList.add('active');
+});
+
+closeMenuBtn.addEventListener('click', () => {
+    navLinks.classList.remove('active');
+});
+
+// Close mobile menu when clicking a link
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+    });
+});
+
+// Slider functionality
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+
+function showSlide(index) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    slides[index].classList.add('active');
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+}
+
+// Initialize slider
+setInterval(nextSlide, 6000);
+
+// Smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        if(this.getAttribute('href') === '#') return;
+        
+        const target = document.querySelector(this.getAttribute('href'));
+        if(target) {
+            target.scrollIntoView({
+                behavior: 'smooth'
             });
-        });
-
-        // Slider functionality
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            slides[index].classList.add('active');
         }
+    });
+});
 
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        }
+// Waste Report Form functionality
+const getStartedBtn = document.getElementById('getStartedBtn');
+const wasteReportOverlay = document.getElementById('wasteReportOverlay');
+const closeFormBtn = document.getElementById('closeFormBtn');
+const wasteReportForm = document.getElementById('wasteReportForm');
 
-        // Initialize slider
-        setInterval(nextSlide, 6000);
+getStartedBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    wasteReportOverlay.style.display = 'block';
+});
 
-        // Dashboard button functionality
-        document.getElementById('dashboardBtn').addEventListener('click', function() {
-            window.location.href = '/client-portal';
-        });
+closeFormBtn.addEventListener('click', function() {
+    wasteReportOverlay.style.display = 'none';
+});
 
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                if(this.getAttribute('href') === '#') return;
-                
-                const target = document.querySelector(this.getAttribute('href'));
-                if(target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
+// Close the form when clicking outside of it
+wasteReportOverlay.addEventListener('click', function(e) {
+    if (e.target === wasteReportOverlay) {
+        wasteReportOverlay.style.display = 'none';
+    }
+});
 
-        // Form submission
-        document.querySelector('.contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your inquiry. Our team will contact you within 24 hours.');
-            this.reset();
-        });
-    </script>
+</script>
 </body>
 </html>
