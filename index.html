@@ -394,6 +394,57 @@
             color: #2d6a44;
         }
 
+        /* FAQ Styles */
+        #faq {
+            background: #f8f9fa;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .faq-item h3 {
+            color: #1a4d2e;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .faq-item h3 .icon {
+            margin-right: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item p {
+            display: none;
+            margin-top: 0.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .faq-item.active h3 .icon {
+            transform: rotate(90deg);
+        }
+
+        .faq-item.active p {
+            display: block;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .mobile-menu-btn {
@@ -475,6 +526,7 @@
                 <a href="#home"><i class="fas fa-home icon"></i>Home</a>
                 <a href="#about"><i class="fas fa-info-circle icon"></i>About</a>
                 <a href="#services"><i class="fas fa-truck icon"></i>Services</a>
+                <a href="#faq"><i class="fas fa-question-circle icon"></i>FAQ</a>
                 <a href="#contact"><i class="fas fa-envelope icon"></i>Contact</a>
                 <a href="#" class="btn" id="dashboardBtn"><i class="fas fa-user icon"></i>My Account</a>
             </div>
@@ -525,6 +577,35 @@
             <div class="service-card">
                 <h3><i class="fas fa-seedling icon"></i>Composting Solutions</h3>
                 <p>Expert advice and services to turn your organic waste into valuable compost for your land.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq">
+    <div class="section-content">
+        <h2 class="section-title"><i class="fas fa-question-circle icon"></i>Frequently Asked Questions</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <h3><i class="fas fa-caret-right icon"></i>What types of waste do you collect?</h3>
+                <p>We collect a wide range of waste types, including household waste, recyclables, organic waste, and some types of hazardous waste. Please contact us for specific details about your waste management needs.</p>
+            </div>
+            <div class="faq-item">
+                <h3><i class="fas fa-caret-right icon"></i>How often do you provide waste collection services?</h3>
+                <p>Our collection frequency varies based on your needs and location. We offer weekly, bi-weekly, and monthly collection schedules. We can work with you to determine the best schedule for your homestead.</p>
+            </div>
+            <div class="faq-item">
+                <h3><i class="fas fa-caret-right icon"></i>Do you offer composting services?</h3>
+                <p>Yes, we provide composting solutions tailored to homesteads. This includes advice on setting up your own compost system, as well as collection services for larger amounts of organic waste.</p>
+            </div>
+            <div class="faq-item">
+                <h3><i class="fas fa-caret-right icon"></i>How can I reduce waste on my homestead?</h3>
+                <p>We offer consultations on waste reduction strategies specific to homesteads. This can include tips on composting, recycling, and sustainable purchasing habits. We're committed to helping you minimize your environmental impact.</p>
+            </div>
+            <div class="faq-item">
+                <h3><i class="fas fa-caret-right icon"></i>What areas do you service?</h3>
+                <p>We currently service rural and semi-rural areas within a 50-mile radius of our main facility. Please contact us with your specific location to confirm service availability.</p>
             </div>
         </div>
     </div>
@@ -689,6 +770,13 @@ wasteReportOverlay.addEventListener('click', function(e) {
     if (e.target === wasteReportOverlay) {
         wasteReportOverlay.style.display = 'none';
     }
+});
+// FAQ Functionality
+document.querySelectorAll('.faq-item h3').forEach(question => {
+    question.addEventListener('click', () => {
+        const item = question.parentNode;
+        item.classList.toggle('active');
+    });
 });
 
 </script>
